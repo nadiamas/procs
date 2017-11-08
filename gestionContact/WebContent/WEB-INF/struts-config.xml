@@ -63,26 +63,26 @@
 <forward name="main" path="/pages/main.jsp" />
 </action>
 
-<action path="/DeleteContact" type="org.lip6.struts.servletAction.DeleteContactAction" name="DeleteContactValidationForm" scope="request" input="/pages/main.jsp">
+<action path="/DeleteContact" type="servletAction.DeleteContactAction" name="DeleteContactValidationForm" scope="request" input="/pages/main.jsp">
 <forward name="affichagecontact" path="/pages/affichagecontact.jsp" />
 <forward name="error" path="/pages/main.jsp" />
 <forward name="sucsupp" path="/pages/sucsupp.jsp" />
 </action>
 
-<action path="/UpdateContact" type="org.lip6.struts.servletAction.UpdateContactAction" name="UpdateContactValidationForm" scope="request" input="/pages/erreurform.jsp">
+<action path="/UpdateContact" type="servletAction.UpdateContactAction" name="UpdateContactValidationForm" scope="request" input="/pages/erreurform.jsp">
 <forward name="affichagecontact" path="/pages/affichagecontact.jsp" />
 <forward name="sucsupp" path="/pages/sucsupp.jsp" />
 <forward name="sucmodif" path="/pages/sucmodif.jsp" />
 </action>
 
 
-<action path="/UpdateGroupe" type="org.lip6.struts.servletAction.UpdateGroupeAction" name="UpdateGroupeValidationForm" scope="request" input="/pages/main.jsp">
+<action path="/UpdateGroupe" type="servletAction.UpdateGroupeAction" name="UpdateGroupeValidationForm" scope="request" input="/pages/main.jsp">
 <forward name="listGroupe" path="/pages/listGroupe.jsp" />
 <forward name="sucsupp" path="/pages/sucsupp.jsp" />
 <forward name="sucmodif" path="/pages/sucmodif.jsp" />
 </action>
 
-<action path="/Affecter" type="org.lip6.struts.servletAction.AffecterAction" name="AffecterValidationForm" scope="request" input="/pages/AffecterContact.jsp">
+<action path="/Affecter" type="servletAction.AffecterAction" name="AffecterValidationForm" scope="request" input="/pages/AffecterContact.jsp">
 <forward name="sucsupp" path="/pages/sucsupp.jsp" />
 <forward name="sucmodif" path="/pages/sucmodif.jsp" />
 <forward name="AffecterContact" path="/pages/AffecterContact.jsp" />
@@ -99,7 +99,7 @@
 
 </action>
 
-<action path="/View" type="org.lip6.struts.servletAction.ViewAction" name="ViewContactValidationForm" scope="request" input="/pages/affichagecontact.jsp">
+<action path="/View" type="servletAction.ViewAction" name="ViewContactValidationForm" scope="request" input="/pages/affichagecontact.jsp">
 <forward name="affichagecontact" path="/pages/affichagecontact.jsp"></forward>
 </action>
 
@@ -110,7 +110,7 @@
 </action>
 
 <action path="/Search"
-    type="org.lip6.struts.servletAction.SearchAction"
+    type="servletAction.SearchAction"
     name="SearchActionForm" scope="request"
     input="/pages/CreateContact.jsp">
       <forward name="success" path="/pages/SearchResultat.jsp"/>

@@ -30,10 +30,14 @@ pageEncoding="ISO-8859-1"%>
 <center>
 <div class="list-group" style="width: 40%;">
   <a href="CreationGroupe.do" class="list-group-item list-group-item-action list-group-item-success"> <center>Créer un groupe</center> </a>
-    <a href="addAdresse.do" class="list-group-item list-group-item-action list-group-item-info"><center>Ajouter une Adresse</center></a>
-    <a href="ContactCreation.do" class="list-group-item list-group-item-action list-group-item-danger">Créer un Contact</center></a>
-  <a href="addTel.do" class="list-group-item list-group-item-action list-group-item-info"><center>Ajouter un numéro de Téléphone</center></a>
+  <a href="listGroupe.do" class="list-group-item list-group-item-action list-group-item-info"><center><bean:message key="group.management"/></center></a>
+  <a href="ContactCreation.do" class="list-group-item list-group-item-action list-group-item-danger">Créer un Contact</center></a>
+  <a href="listeContact.do" class="list-group-item list-group-item-action list-group-item-info"><center><bean:message key="list.contact"/></center></a>
 </div>
+
+
+<hr>
+<hr>
 
 </center>
 </div>

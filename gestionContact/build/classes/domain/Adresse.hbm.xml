@@ -6,10 +6,10 @@
   	 <id name="idAdresse" type="long" column="ID_ADRESSE" >
    		<generator class="increment"/>
   	 </id>
-  	  <property name="rue" type="string" not-null="true" update="false"/> 
-  	  <property name="codepostal" type="string" not-null="true" update="false"/> 
-  	  <property name="ville" type="string" not-null="true" update="false"/> 
-  	  <property name="pays" type="string" not-null="true" update="false"/> 
+  	  <property name="rue" type="string" not-null="true" lazy="false" /> 
+  	  <property name="codepostal" type="string" not-null="true" lazy="false" /> 
+  	  <property name="ville" type="string" not-null="true" lazy="false" /> 
+  	  <property name="pays" type="string" not-null="true" lazy="false" /> 
 
   </class>
 </hibernate-mapping>

@@ -12,7 +12,7 @@ public class Groupe {
 	private Set<Contact> contacts = new HashSet<Contact>(0);
 	
 	
-	public Groupe(int idGroupe, String nomGroupe) {
+	public Groupe(long idGroupe, String nomGroupe) {
 		super();
 		this.idGroupe = idGroupe;
 		this.nomGroupe = nomGroupe;
