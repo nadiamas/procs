@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+<struts-config>
+<form-beans>
+<form-bean name="AddContactValidationForm" type="actionForm.AddContactValidationForm"/>
+<form-bean name="DeleteContactValidationForm" type="actionForm.DeleteContactValidationForm"/>
+<form-bean name="UpdateContactValidationForm" type="actionForm.UpdateContactValidationForm"/>
+<form-bean name="AfficheContactValidationForm" type="actionForm.AfficheContactValidationForm"/>
+<form-bean name="AddGroupValidationForm" type="actionForm.AddGroupValidationForm"/>
+<form-bean name="ViewContactValidationForm" type="actionForm.ViewContactValidationForm"/>
+<form-bean name="LoginActionForm" type="actionForm.LoginActionForm"/>
+<form-bean name="RetourValidationForm" type="actionForm.RetourValidationForm"/>
+<form-bean name="UpdateGroupeValidationForm" type="actionForm.UpdateGroupeValidationForm"/>
+<form-bean name="SearchActionForm" type="actionForm.SearchActionForm"/>
+<form-bean name="AffecterValidationForm" type="actionForm.AffecterValidationForm"/>
+<form-bean name="AddAdresseValidationForm" type="actionForm.AddAdresseValidationForm"/>
+<form-bean name="AddTelValidationForm" type="actionForm.AddTelValidationForm"/>
+<form-bean name="ModifGroupeValidationForm" type="actionForm.ModifGroupeValidationForm"/>
+
+
+
+</form-beans>
+
+<action-mappings>
+<action path="/main" forward="/pages/main.jsp"/>
+<action path="/ContactCreation" forward="/pages/contactCreation.jsp" />
+<action path="/CreationGroupe" forward="/pages/CreationGroupe.jsp" />
+<action path="/affichagecontact" forward="/pages/affichagecontact.jsp" />
+<action path="/listeContact" forward="/pages/listeContact.jsp" />
+<action path="/listGroupe" forward="/pages/listGroupe.jsp" />
+<action path="/AffecterContact" forward="/pages/AffecterContact.jsp" />
+<action path="/addAdresse" forward="/pages/addAdresse.jsp" />
+<action path="/addTel" forward="/pages/addTel.jsp" />
+
+
+
+<!-- <action path="/LoginAction" type="org.lip6.struts.servletAction.LoginAction" name="LoginValidationForm" scope="request" input="/pages/index.html">
+<forward name="success" path="/pages/success.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action> -->
+<action path="/Login" type="servletAction.LoginAction" name="LoginActionForm" scope="request" input="/pages/index.jsp">
+<forward name="errorlogin"   path="/pages/errorlogin.jsp" />
+<forward name="success"   path="/pages/main.jsp" />
+</action>
+
+
+<action path="/AddContact" type="servletAction.AddContactAction" name="AddContactValidationForm" scope="request" input="/pages/contactCreation.jsp">
+<forward name="success" path="/pages/success.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+<forward name="main" path="/pages/main.jsp" />
+</action>
+
+
+<action path="/AddAdresse" type="servletAction.AddAdresseAction" name="AddAdresseValidationForm" scope="request" input="/pages/addAdresse.jsp">
+<forward name="success" path="/pages/success.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+<forward name="main" path="/pages/main.jsp" />
+</action>
+
+<action path="/AddTel" type="servletAction.AddTelAction" name="AddTelValidationForm" scope="request" input="/pages/NewTel.jsp">
+<forward name="success" path="/pages/success.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+<forward name="main" path="/pages/main.jsp" />
+</action>
+
+<action path="/DeleteContact" type="servletAction.DeleteContactAction" name="DeleteContactValidationForm" scope="request" input="/pages/main.jsp">
+<forward name="affichagecontact" path="/pages/affichagecontact.jsp" />
+<forward name="error" path="/pages/main.jsp" />
+<forward name="sucsupp" path="/pages/sucsupp.jsp" />
+</action>
+
+<action path="/UpdateContact" type="servletAction.UpdateContactAction" name="UpdateContactValidationForm" scope="request" input="/pages/AfficheContact.jsp">
+<forward name="affichagecontact" path="/pages/AfficheContact.jsp" />
+<forward name="sucsupp" path="/pages/sucsupp.jsp" />
+<forward name="sucmodif" path="/pages/sucmodif.jsp" />
+</action>
+
+<action path="/ModifGroupe" type="servletAction.ModifGroupeAction" name="ModifGroupeValidationForm" scope="request" input="/pages/ModifGroupe.jsp">
+<forward name="sucsupp" path="/pages/sucsupp.jsp" />
+<forward name="sucmodif" path="/pages/sucmodif.jsp" />
+</action>
+
+<action path="/AfficheContact" type="servletAction.AfficheContactAction" name="AfficheContactValidationForm" scope="request" input="/pages/erreurform.jsp">
+<forward name="Affichecontact" path="/pages/AfficheContact.jsp" />
+<forward name="sucsupp" path="/pages/sucsupp.jsp" />
+<forward name="sucmodif" path="/pages/sucmodif.jsp" />
+</action>
+
+<action path="/UpdateGroupe" type="servletAction.UpdateGroupeAction" name="UpdateGroupeValidationForm" scope="request" input="/pages/main.jsp">
+<forward name="listGroupe" path="/pages/listGroupe.jsp" />
+<forward name="sucsupp" path="/pages/sucsupp.jsp" />
+<forward name="sucmodif" path="/pages/sucmodif.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+
+</action>
+
+
+<action path="/Affecter" type="servletAction.AffecterAction" name="AffecterValidationForm" scope="request" input="/pages/AffecterContact.jsp">
+<forward name="sucsupp" path="/pages/sucsupp.jsp" />
+<forward name="sucmodif" path="/pages/sucmodif.jsp" />
+<forward name="AffecterContact" path="/pages/AffecterContact.jsp" />
+
+</action>
+
+
+
+<action path="/AddGroup" type="servletAction.AddGroupAction" name="AddGroupValidationForm" scope="request" input="/pages/CreationGroupe.jsp">
+<forward name="successgrp" path="/pages/successgrp.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+<forward name="main" path="/pages/main.jsp" />
+<forward name="listGroupe" path="/pages/listGroupe.jsp" />
+
+</action>
+
+<action path="/View" type="servletAction.ViewAction" name="ViewContactValidationForm" scope="request" input="/pages/affichagecontact.jsp">
+<forward name="affichagecontact" path="/pages/affichagecontact.jsp"></forward>
+</action>
+
+
+<action path="/Retour" type="servletAction.RetourAction" name="RetourValidationForm" scope="request" input="/pages/success.jsp">
+<forward name="main" path="/pages/main.jsp" />
+<forward name="affichagecontact" path="/pages/affichagecontact.jsp" />
+</action>
+
+<action path="/Search"
+    type="servletAction.SearchAction"
+    name="SearchActionForm" scope="request"
+    input="/pages/listeContact.jsp">
+      <forward name="success" path="/pages/SearchResultat.jsp"/>
+   <forward name="error"   path="/pages/error.jsp" />
+ </action>  
+
+
+</action-mappings>
+<!-- ========== Ressources de definitions de messages
+=========================== -->
+<message-resources parameter="Ressources" />
+</struts-config>

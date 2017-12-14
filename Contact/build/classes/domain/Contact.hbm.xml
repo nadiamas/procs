@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="domain">
+  <class name="Contact" table="CONTACT" discriminator-value="CONTACT">
+  
+  <!--  <cache usage="read-write" /> -->
+  
+  	 <id name="num" type="long" column="ID_CONTACT" >
+   		<generator class="increment"/>
+  	 </id>
+  	  <discriminator column="sousclasse" type="string"/>
+  	  <version name="version" access="field" column="VERSION" />
+  	  <property name="nom" type="string" not-null="true" /> 
+  	  <property name="prenom" type="string" not-null="true" /> 
+  	  <property name="mail" type="string" not-null="true" /> 
+  	  
+  	  <many-to-one name="adresse" column="ID_ADRESSE"  optimistic-lock="false" class="Adresse" cascade="all"  lazy="false"/> 
+  	  
+	<set name="groups"   table="PROFIL" lazy="false" fetch="select"  cascade="all">  
+		<key column="ID_CONTACT"/>  
+		<many-to-many class="Groupe" column="ID_GROUPE"/>  
+	</set>
+
+	<set name="tels" table="telephone" cascade="all-delete-orphan" fetch="select" lazy="false">   
+		 <key column="ID_CONTACT" />  
+		 <one-to-many class="Telephone"/>  
+	</set> 
+ 
+ 
+  <subclass name="Entreprise" discriminator-value="Entreprise">
+	<property name="numeroSiret" column="numeroSiret" type="long"/>
+	</subclass>
+  
+  </class>
+</hibernate-mapping>

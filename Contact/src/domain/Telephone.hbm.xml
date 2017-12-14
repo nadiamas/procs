@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="domain">
+  <class name="Telephone" table="Telephone">
+  	 <id name="idTel" type="long" column="ID_TEL">
+   		<generator class="increment"/>
+  	 </id>
+  	  <property name="typeTel" type="string" not-null="true" lazy="false"/> 
+  	  <property name="numTel" type="string" not-null="true" lazy="false"/>
+  	   
+	<many-to-one name="contact" column="ID_CONTACT"  class="Contact" lazy="false"  cascade="all"/> 
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="domain">
+  <class name="Groupe" table="GROUPE" dynamic-update="true" >
+  	 <id name="idGroupe" type="long" column="ID_GROUPE" >
+   		<generator class="increment"/>
+  	 </id>
+  	  <property name="nomGroupe" type="string" not-null="true" unique="true" /> 
+ 
+<set name="contacts"   table="PROFIL" inverse="true" lazy="true" fetch="select" cascade="all">  
+<key column="ID_GROUPE"/>  
+<many-to-many class="Contact" column="ID_CONTACT"/>  
+</set>
+  </class>
+</hibernate-mapping>
