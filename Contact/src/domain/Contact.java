@@ -3,8 +3,12 @@ package domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Version;
+
 public class Contact {
 	
+	@Version
+	private int version;
 	private long num ; 
 	private String nom ; 
 	private String prenom ; 
@@ -12,7 +16,7 @@ public class Contact {
 	private Set<Groupe> groups = new HashSet<Groupe>(0);
 	private Set<Telephone> tels = new HashSet<Telephone>(0);
 	private Adresse adresse; 
-	private int version;
+	
 	
 
 	public Contact() {

@@ -153,8 +153,6 @@ public class AddContactValidationForm extends ActionForm {
 		
 		}
 	
-	
-	
 		public ActionErrors validate(
 		ActionMapping mapping, HttpServletRequest request ) {
 			
@@ -185,6 +183,10 @@ public class AddContactValidationForm extends ActionForm {
 			errors.add("code",new
 			ActionMessage("creation.code.error.required"));
 			}
+		if( getNumSiret()== null || getNumSiret().length() < 1 ) {
+			errors.add("code",new
+			ActionMessage("creation.code.error.required"));
+			}
 		if( getPays()== null || getPays().length() < 1 ) {
 			errors.add("pays",new
 			ActionMessage("creation.pays.error.required"));
@@ -199,8 +201,6 @@ public class AddContactValidationForm extends ActionForm {
 		}
 		}
 
-		
-		
 		try {
 			Integer.parseInt(getCodepostal());
 		} catch (NumberFormatException e){

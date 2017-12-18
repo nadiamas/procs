@@ -17,7 +17,7 @@
   	  
   	  <many-to-one name="adresse" column="ID_ADRESSE"  optimistic-lock="false" class="Adresse" cascade="all"  lazy="false"/> 
   	  
-	<set name="groups"   table="PROFIL" lazy="false" fetch="select" cascade="all">  
+	<set name="groups"   table="PROFIL" lazy="false"  cascade="save-update">  
 		<key column="ID_CONTACT"/>  
 		<many-to-many class="Groupe" column="ID_GROUPE"/>  
 	</set>

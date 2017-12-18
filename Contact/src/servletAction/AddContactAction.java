@@ -53,7 +53,6 @@ public class AddContactAction extends Action {
 	final String numSiret = lForm.getNumSiret();
 	
 	// create a new Contact
-	Telephone t1,t2,t3;
 	ServiceContact sc = (ServiceContact) MyApplicationContext.getApplicationContext().getBean("ServiceContact");
 	
 	if(btn.equals("save")){

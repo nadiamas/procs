@@ -6,6 +6,10 @@ public class Entreprise extends Contact {
 	
 	private long numeroSiret;
 
+	
+	public Entreprise() {
+	}
+
 	public Entreprise(long numeroSiret) {
 		super();
 		this.numeroSiret = numeroSiret;

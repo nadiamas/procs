@@ -18,6 +18,37 @@ pageEncoding="ISO-8859-1"%>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html:base/>
+<script type="text/javascript">
+
+function demarage(){
+	
+	var x = document.getElementById('numSiretTextBox');
+	var checkbox = document.getElementById('checkBoxEntreprise');
+	if(x.value == 0){
+		checkbox.checked = false;
+		document.getElementById('divNumSiret').style.visibility = 'hidden';
+		
+	} else{
+		checkbox.checked = true;
+	}
+}
+
+
+
+function activeNumSiret(){
+	var checkBox = document.getElementById('checkBoxEntreprise');
+	var numSiret = document.getElementById('divNumSiret');
+    if (checkBox.checked) {
+    	numSiret.style.visibility = 'visible';
+    	
+    } else{
+    	numSiret.style.visibility = 'hidden';
+    	document.getElementById('numSiretTextBox').value = 0;
+    }
+	
+	
+}
+	</script>
 </head>
 <body style="background-color:#FFFACD">
 <div class="container">
@@ -34,6 +65,25 @@ pageEncoding="ISO-8859-1"%>
 <%
 Contact c = (Contact) request.getAttribute("contact");
 %>
+
+		<div class="col-md-4">
+		Entreprise <input disabled="disabled" id="checkBoxEntreprise" type="checkbox" onclick="activeNumSiret()">
+		</div>
+
+			<div id="divNumSiret" class="col-md-4" >
+			<!-- rajout du num siret de l'entreprise -->
+			Num Siret 
+				<br>
+				<span style="color: red"><html:errors
+						property="num siret chiffre" /></span>
+				<br>
+				<span style="color: red"><html:errors property="numSiret" /></span>
+				<br>
+				<html:text readonly="true" styleId="numSiretTextBox" property="numSiret" size="20" maxlength="20" 
+					styleClass="form-control"  />
+			</div>
+			
+		</div>
 <table>
 <html:hidden property="idm"  value="<%=String.valueOf(c.getNum())%>" />
 <tr>

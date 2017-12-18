@@ -53,7 +53,6 @@ public class UpdateContactAction extends Action {
 			}
 			if(submit.equals("supprimer")){
 				sc.deleteContact(idm);
-				System.out.println("contact "+ idm + " supprime");
 				return dMapping.findForward("sucsupp");
 			}
 			  

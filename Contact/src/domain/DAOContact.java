@@ -76,8 +76,7 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 	/********** CRUD Contact *********/
 	
 	@Override
-	public boolean addContact(Contact c,Adresse adresse,Telephone port,Telephone fix, String groupe){
-		
+	public boolean addContact(Contact c,Adresse adresse,Telephone port,Telephone fix, String groupe){	
 		c.setAdresse(adresse);
 		Set<Telephone> tels = new HashSet<Telephone>();		
 		HashSet<Groupe> grps = new HashSet<Groupe>();
@@ -112,6 +111,7 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		List<Contact> contacts = (List<Contact>) getHibernateTemplate().findByNamedParam("from Contact as c where c.nom = :nom", "nom", name);
         return contacts;
 	}
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Contact> listContact(){
@@ -135,17 +135,37 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		Contact c = (Contact) getHibernateTemplate().get(Contact.class, idContact);
 		return c;
 	}
-	@Override
-	public boolean deleteContact (Long idContact){
-		Contact contact ;
+	
+	public boolean deleteContactFromAllGroup(long idContact) {
+		System.out.println("Début de deleteContactFromAllGroup() avec idContact = " + idContact);
 		try {
-			contact =getHibernateTemplate().get(Contact.class,idContact);
-			getHibernateTemplate().delete(contact);
+			Contact contact = getHibernateTemplate().get(Contact.class, idContact);
+			List<Groupe> Groups = listGroupe();
+			for (Groupe contactGroup : Groups) {
+				if (contactGroup.getContacts().contains(contact)) {
+					contactGroup.getContacts().remove(contact);
+					getHibernateTemplate().update(contactGroup);
+				}
+			}
 			return true;
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			return false;
-		}	
+		}
+	}
+	
+	@Override
+	public boolean deleteContact (Long idContact){
+		boolean result = deleteContactFromAllGroup(idContact);
+		try {
+			Contact c = getContact(idContact);
+			getHibernateTemplate().delete(c);
+			result = result && true;
+			return result;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	@Override

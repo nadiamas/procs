@@ -21,17 +21,18 @@ public class UpdateContactValidationForm extends ActionForm{
 	private String telPort ; 
 	private String telFix  ; 
 	private String submit;
-	private String numSiretTextBox ; 
+	private String numSiret ; 
 
 	
 	
-		public String getNumSiretTextBox() {
-		return numSiretTextBox;
+		
+	public String getNumSiret() {
+		return numSiret;
 	}
-	public void setNumSiretTextBox(String numSiretTextBox) {
-		this.numSiretTextBox = numSiretTextBox;
+	public void setNumSiret(String numSiret) {
+		this.numSiret = numSiret;
 	}
-		public String getSubmit() {
+	public String getSubmit() {
 		return submit;
 	}
 	public void setSubmit(String submit) {
