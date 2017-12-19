@@ -1,9 +1,13 @@
 package domain;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
+import java.security.acl.Group;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hamcrest.core.IsInstanceOf;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,8 +18,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import util.HibernateUtil;
-
-@Transactional(readOnly = false)
 
 public class DAOContact extends HibernateDaoSupport implements IDaoContact{	
 
@@ -49,27 +51,27 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 			return false;
 		}
 	}
+	
 	@Override
 	public boolean deleteGroupe(long id) {
 		Groupe groupe = new Groupe();
 		try {
 			groupe =getHibernateTemplate().get(Groupe.class,id);
+			DetachedCriteria filter = DetachedCriteria.forClass(Contact.class).createCriteria("groups");
+			filter.add(Restrictions.like("idGroupe", id));
+			@SuppressWarnings("unchecked")
+			List<Contact> listContactInGroup = (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+			for (Contact contact : listContactInGroup) {
+				contact.getGroups().remove(groupe);
+				getHibernateTemplate().update(contact);
+			}
+			groupe.setContacts(null);
+			getHibernateTemplate().update(groupe);
 			getHibernateTemplate().delete(groupe);
 			return true;
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			return false;
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Groupe> listGroupe() {
-		try {
-			return (List<Groupe>) getHibernateTemplate().find(" from Groupe");
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			return null;
 		}
 	}
 
@@ -81,15 +83,15 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		Set<Telephone> tels = new HashSet<Telephone>();		
 		HashSet<Groupe> grps = new HashSet<Groupe>();
 		try{
-			if(groupe != null){
+			if(! groupe.equals("Groupes") ){
 			DetachedCriteria filter = DetachedCriteria.forClass(Groupe.class);
 			filter.add(Restrictions.like("nomGroupe", groupe));
 			Groupe g = (Groupe) getHibernateTemplate().findByCriteria(filter).get(0);
 			grps.add(g); c.setGroups(grps);
 			}
-			port.setContact(c); tels.add(port);
-			fix.setContact(c); tels.add(fix);
-			c.setTels(tels);
+			port.setContact(c); c.getTels().add(port);
+			fix.setContact(c); c.getTels().add(fix);
+			
 			getHibernateTemplate().save(c);
 			return true;
 			
@@ -136,6 +138,13 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		return c;
 	}
 	
+	@Override
+	public Groupe getGroupe(long idGroupe){
+		Groupe g = (Groupe) getHibernateTemplate().get(Groupe.class, idGroupe);
+		return g;
+	}
+	
+	
 	public boolean deleteContactFromAllGroup(long idContact) {
 		System.out.println("Début de deleteContactFromAllGroup() avec idContact = " + idContact);
 		try {
@@ -178,8 +187,21 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 	}
 	
 	@Override
-	public void updateContact (Contact contactTmp, Contact contact,Set<Telephone> tels){
+	public void updateContact (Contact contactTmp, Contact contact,Set<Telephone> tels, long numSiret){
 		
+		/*if (numSiret <= 0) {
+				contactTmp.setType("Contact");
+				if (contactTmp instanceof Entreprise) {
+				contactTmp = new Contact();
+				}
+		} else {
+			if (contactTmp instanceof Entreprise) {
+				((Entreprise) contactTmp).setNumeroSiret(numSiret);
+			}else{
+				contactTmp.setType("Entreprise");
+				contactTmp = new Entreprise(numSiret);
+			}
+		}*/
 		contactTmp.setNom(contact.getNom());
 		contactTmp.setPrenom(contact.getPrenom());
 		contactTmp.setMail(contact.getMail());
@@ -187,11 +209,10 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		contactTmp.getAdresse().setVille((contact.getAdresse().getVille()));
 		contactTmp.getAdresse().setRue((contact.getAdresse().getRue()));
 		contactTmp.getAdresse().setPays((contact.getAdresse().getPays()));
-
+		contactTmp.getTels().clear();
 		if(tels != null ){
 			for(Telephone t :tels){
 				t.setContact(contactTmp);
-				contactTmp.getTels().add(t);
 			}
 		}
 		contactTmp.setTels(tels);
@@ -265,6 +286,107 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		        .executeUpdate();
 		tx.commit();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Groupe> listGroupe() {
+		try {
+			return (List<Groupe>) getHibernateTemplate().find(" from Groupe");
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public long getNumSiretEntreprise(long id) {
+
+		try {
+			Entreprise entreprise = getHibernateTemplate().get(Entreprise.class, id);
+			if (entreprise != null) {
+				return entreprise.getNumeroSiret();
+			} else {
+				return 0;
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public String getType(long idContact) {
+		// TODO Auto-generated method stub
+		if (getNumSiretEntreprise(idContact) == 0 )
+			return "Contact";
+		else
+			return "Entreprise";
+	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Contact> listContactInGroup(long idGroup) {
+		try {
+			DetachedCriteria filter = DetachedCriteria.forClass(Contact.class).createCriteria("groups");
+			filter.add(Restrictions.like("idGroupe", idGroup));
+			return (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Contact> listContactOutsideGroup(long idGroup) {
+		
+		DetachedCriteria filter = DetachedCriteria.forClass(Contact.class).createCriteria("groups");
+		filter.add(Restrictions.like("idGroupe", idGroup));
+		List<Contact> listContactInGroup = (List<Contact>) getHibernateTemplate().findByCriteria(filter);
+		List<Contact> listAllContact = (List<Contact>) getHibernateTemplate()
+				.findByCriteria(DetachedCriteria.forClass(Contact.class));
+		for (Contact contact : listContactInGroup) {
+			listAllContact.remove(contact);
+		}
+		return listAllContact;
+	}
+	
+	@Override
+	public boolean addContactToGroup(Long idGroupe, Long idContact) {
+
+		try {
+			Groupe g = getGroupe(idGroupe);
+			Contact c = getHibernateTemplate().get(Contact.class, idContact);
+			g.getContacts().add(c);
+			c.getGroups().add(g);
+			getHibernateTemplate().saveOrUpdate(g);
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean deleteContactFromGroup(long idGroup, long idContact) {
+		try {
+			System.out.println("gr="+idGroup);
+			System.out.println("ctc="+idContact);
+			Contact contact = getHibernateTemplate().get(Contact.class, idContact);
+			Groupe Groupe = getHibernateTemplate().get(Groupe.class, idGroup);
+			boolean result = contact.getGroups().remove(Groupe);
+			boolean result2 = Groupe.getContacts().remove(contact);
+			getHibernateTemplate().update(contact);
+			getHibernateTemplate().update(Groupe);
+
+			return result & result2;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public void afficheMessage(){
+		System.out.println("je suis le projet PROCS");
+	}
+
+	
 
 
 

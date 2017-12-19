@@ -22,6 +22,7 @@
 <table class="table table-striped">
 <tr><th>Id Groupe </th>
 	<th>Groupe</th>
+	<th>Contacts</th>
 	<th>Suppression</th>
 	<th>Modification</th>
 	 </tr> 
@@ -34,6 +35,9 @@ for(Groupe g :l){
 <html:form action="/UpdateGroupe">
 <td><%=g.getIdGroupe()%></td>
 <td><html:text property="nomGroupe" value="<%=g.getNomGroupe()%>" /></td>
+<td>
+<html:submit property="submit" value="Gérer Contactes" styleClass="btn btn-default">Gérer Contactes</html:submit>
+</td>
 <td>
 <html:submit property="submit" value="Supprimer" styleClass="btn btn-default">Supprimer</html:submit>
 </td>

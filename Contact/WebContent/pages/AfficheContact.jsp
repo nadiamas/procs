@@ -22,7 +22,7 @@ pageEncoding="ISO-8859-1"%>
 
 function demarage(){
 	
-	var x = document.getElementById('numSiretTextBox');
+	var x = document.getElementById('numSiret');
 	var checkbox = document.getElementById('checkBoxEntreprise');
 	if(x.value == 0){
 		checkbox.checked = false;
@@ -50,7 +50,7 @@ function activeNumSiret(){
 }
 	</script>
 </head>
-<body style="background-color:#FFFACD">
+<body style="background-color:#FFFACD" onload="demarage()">
 <div class="container">
 
 <html:form action="/UpdateContact" styleClass="form-horizontal">
@@ -64,28 +64,22 @@ function activeNumSiret(){
 <center>
 <%
 Contact c = (Contact) request.getAttribute("contact");
+long siret =(long) request.getAttribute("siret");
 %>
 
-		<div class="col-md-4">
-		Entreprise <input disabled="disabled" id="checkBoxEntreprise" type="checkbox" onclick="activeNumSiret()">
-		</div>
 
-			<div id="divNumSiret" class="col-md-4" >
-			<!-- rajout du num siret de l'entreprise -->
-			Num Siret 
-				<br>
-				<span style="color: red"><html:errors
-						property="num siret chiffre" /></span>
-				<br>
-				<span style="color: red"><html:errors property="numSiret" /></span>
-				<br>
-				<html:text readonly="true" styleId="numSiretTextBox" property="numSiret" size="20" maxlength="20" 
-					styleClass="form-control"  />
-			</div>
-			
-		</div>
 <table>
 <html:hidden property="idm"  value="<%=String.valueOf(c.getNum())%>" />
+<tr >
+<td>
+Entreprise <input  id="checkBoxEntreprise" type="checkbox" onclick="activeNumSiret()">
+</td>
+<td id="divNumSiret">
+Num Siret 				
+<html:text  styleId="numSiret" property="numSiret" size="20" maxlength="20"  styleClass="form-control" value="<%=String.valueOf(siret)%>" />
+</td>
+</tr>
+
 <tr>
 <td align="right">
 Nom

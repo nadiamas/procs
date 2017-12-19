@@ -13,9 +13,10 @@ public class Contact {
 	private String nom ; 
 	private String prenom ; 
 	private String mail ;
-	private Set<Groupe> groups = new HashSet<Groupe>(0);
-	private Set<Telephone> tels = new HashSet<Telephone>(0);
+	private Set<Groupe> groups = new HashSet<Groupe>();
+	private Set<Telephone> tels = new HashSet<Telephone>();
 	private Adresse adresse; 
+	private String type;
 	
 	
 
@@ -43,6 +44,13 @@ public class Contact {
 		this.adresse = adresse;
 	}
 
+
+	public String getType(Contact c){
+		if(c instanceof Contact)
+			return "Contact";
+		else
+			return "Entreprise";
+	}
 	
 	public int getVersion() {
 		return version;
@@ -67,6 +75,16 @@ public class Contact {
 
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
+	}
+
+
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 
@@ -122,7 +140,5 @@ public class Contact {
 				+ ", tels=" + tels + ", adresse=" + adresse + ", version=" + version + "]";
 	}
 
-
-	
 	
 }

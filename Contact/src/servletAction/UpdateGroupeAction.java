@@ -1,8 +1,11 @@
 package servletAction;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +27,7 @@ public class UpdateGroupeAction extends Action {
 	
 	public ActionForward execute(final ActionMapping dMapping,
 			ActionForm dForm, final HttpServletRequest dRequest,
-			final HttpServletResponse dResponse) throws NamingException, SQLException {
+			final HttpServletResponse dResponse) throws NamingException, SQLException, ServletException, IOException {
 				
 			
 			final UpdateGroupeValidationForm lForm=(UpdateGroupeValidationForm)dForm;
@@ -40,6 +43,11 @@ public class UpdateGroupeAction extends Action {
 				else
 					return dMapping.findForward("error");
 				}
+			if(submit.equals("Gérer Contactes")){
+				  RequestDispatcher rd = dRequest.getRequestDispatcher("/pages/gestionContact.jsp");
+				  dRequest.setAttribute("idm", idm);
+				  rd.forward(dRequest, dResponse);
+			}
 			if(submit.equals("Supprimer")){
 				if(sc.deleteGroupe(idm))
 					return dMapping.findForward("sucsupp");

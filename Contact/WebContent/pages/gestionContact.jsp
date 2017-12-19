@@ -27,50 +27,77 @@
 
 
 </head>
+
 <body  style="background-color:#FFFACD; ">
+<html:errors/>
+
+    
+       <center> <h3>Contactes Hors Groupe</h3> </center>
+       <br>
+   <html:form action="/AddContactToGroupe">    
 <table class="table" >
 <thead class="thead-inverse">
-
-<tr>
-<th>Id </th>
- <th>Type</th>
+<tr><th>Id </th>
 	<th>Nom</th>
 	<th>Prenom </th>
 	<th>mail</th>
-	<th>Groupe</th>
-	<th>Affichage</th>
-  </tr>
-  </thead>
+	<th>Action</th>
+	 </tr> 
+	 </thead>
+
 <%
 ServiceContact sc = (ServiceContact)MyApplicationContext.getApplicationContext().getBean("ServiceContact");
-List<Contact> l = (List<Contact>) request.getAttribute("list");
+String idGroupe = String.valueOf(request.getAttribute("idm"));
+List<Contact> l = sc.listContactOutsideGroup((long)request.getAttribute("idm"));
 for(Contact c :l){
 %>
 <tr>
-<html:form action="/AfficheContact">
 <td><%=c.getNum()%></td>
-<td><%=sc.getType(c.getNum())%>
-<html:hidden property="type"  value="<%=sc.getType(c.getNum())%>"/>
-</td>
 <td><%=c.getNom()%></td>
 <td><%=c.getPrenom()%></td>
 <td><%=c.getMail()%></td>
+<td>
+<html:submit property="btn" value="Ajouter" styleClass="btn btn-warning">Ajouter</html:submit>
+</td>
+<html:hidden property="idContact"  value="<%=String.valueOf(c.getNum())%>" />
+<html:hidden property="idGroupe"  value="<%=idGroupe%>" />
 
-<td>
-<% 
-Set<Groupe> groups = sc.listGRP(c.getNum());
-for(Groupe g : groups){
-%> <%=g.getNomGroupe()%>
-<%} %>
-</td>
-<td>
-<html:submit property="submit" value="afficher" styleClass="btn btn-warning">Afficher</html:submit>
-</td>
-<html:hidden property="idm"  value="<%=String.valueOf(c.getNum())%>" />
-</html:form>
 </tr>
+
 <%} %>
 
 </table>
+<br>
+<hr><hr>
+
+       <center> <h3>Contactes Appartenant au Groupe </h3></center>
+<br>
+<table class="table" >
+<thead class="thead-inverse">
+<tr><th>Id </th>
+	<th>Nom</th>
+	<th>Prenom </th>
+	<th>mail</th>
+	<th>Action</th>
+	 </tr> 
+	 </thead>
+<%
+List<Contact> li = sc.listContactInGroup((long)request.getAttribute("idm"));
+for(Contact c :li){
+%>
+<tr>
+<td><%=c.getNum()%></td>
+<td><%=c.getNom()%></td>
+<td><%=c.getPrenom()%></td>
+<td><%=c.getMail()%></td>
+<td>
+<html:submit property="btn" value="Supprimer" styleClass="btn btn-warning">Supprimer</html:submit>
+<html:hidden property="idContact"  value="<%=String.valueOf(c.getNum())%>" />
+<html:hidden property="idGroupe"  value="<%=idGroupe%>" />
+</td>
+</tr>
+<%} %>
+</table>
+</html:form>
 </body>
 </html:html>

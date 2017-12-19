@@ -10,6 +10,19 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
                      	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
  
+ 
+
+   <aop:config>      
+     <aop:aspect id="messageContactBean" ref="messageContact" > 
+     <aop:before 
+     pointcut="execution(* afficheMessage())" 
+			method="print" /> 
+     </aop:aspect>     
+      </aop:config>      
+      
+    <bean id="messageContact" class="domain.MessageContact"/> 
+ 
+ 
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -50,13 +63,21 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	</bean>
 	      <tx:annotation-driven transaction-manager="transactionManager" />
 	
-		<tx:advice id="txAdvice">
-		<tx:attributes>
-			<tx:method name="add*" read-only="false" />
-		</tx:attributes>
-	</tx:advice>
-
-
+	<tx:advice id="txAdvice"> 
+     	<tx:attributes>     
+			<tx:method name="get*" read-only="true" timeout="-1" /> 
+			<tx:method name="sav*" propagation="REQUIRED" /> 
+			<tx:method name="add*" propagation="REQUIRED" /> 
+			<tx:method name="update*" propagation="REQUIRED" /> 
+			<tx:method name="delete*" propagation="REQUIRED" /> 
+			<tx:method name="list*" propagation="REQUIRED" /> 
+            <tx:method name="Search*"     read-only="true"     />     
+            <tx:method name="*"     propagation="REQUIRED"     timeout="1"/>     
+    	 </tx:attributes>     
+	</tx:advice> 
+	<aop:config> 
+     <aop:advisor     pointcut="execution(* services.ServiceContact.*(..))" advice-ref="txAdvice"/> 
+	</aop:config> 
 
 	<bean id="ServiceContact" class="services.ServiceContact" scope="singleton">
 		<property name="dao" ref="DAOContact" />

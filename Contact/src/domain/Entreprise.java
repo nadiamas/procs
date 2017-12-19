@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class Entreprise extends Contact {
 	
-	private long numeroSiret;
+	private long numeroSiret ;
 
 	
 	public Entreprise() {
@@ -20,6 +20,17 @@ public class Entreprise extends Contact {
 		this.numeroSiret=numeroSiret;
 	}
 	
+	public Entreprise(String nom, String prenom, String mail, Set<Groupe> groups, Set<Telephone> tels,
+			Adresse adresse) {
+		super(nom, prenom, mail, groups, tels, adresse);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Entreprise(String nom, String prenom, String mail) {
+		super(nom, prenom, mail);
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getNumeroSiret() {
 		return numeroSiret;
 	}

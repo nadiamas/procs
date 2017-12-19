@@ -75,11 +75,11 @@
 <table class="table" >
 <thead class="thead-inverse">
 <tr><th>Id </th>
+	<th>Type</th>
 	<th>Nom</th>
 	<th>Prenom </th>
 	<th>mail</th>
 	<th>Groupe</th>
-	<th>Modifier Groupe</th>
 	<th>Affichage</th>
 	 </tr> 
 	 </thead>
@@ -93,18 +93,19 @@ for(Contact c :l){
 <tr>
 <html:form action="/AfficheContact">
 <td><%=c.getNum()%></td>
+<td><%=sc.getType(c.getNum())%>
+<html:hidden property="type"  value="<%=sc.getType(c.getNum())%>"/>
+</td>
 <td><%=c.getNom()%></td>
 <td><%=c.getPrenom()%></td>
 <td><%=c.getMail()%></td>
+
 <td>
 <% 
 Set<Groupe> groups = sc.listGRP(c.getNum());
 for(Groupe g : groups){
-%> <%=g.getNomGroupe() + groups.size()%>
+%> <%=g.getNomGroupe()%>
 <%} %>
-</td>
-<td>
-<html:submit property="submit" value="Modifier Groupe" styleClass="btn btn-warning">Modifier Groupe</html:submit>
 </td>
 <td>
 <html:submit property="submit" value="afficher" styleClass="btn btn-warning">Afficher</html:submit>

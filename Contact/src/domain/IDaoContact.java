@@ -16,9 +16,16 @@ public interface IDaoContact {
 	public List<Telephone> listTel(long idContact);
 	public Set<Groupe> listGRP(long idContact);
 	public boolean deleteContact (Long idContact);
-	public void updateContact (Contact contactTmp, Contact contact, Set<Telephone> tels);
+	public void updateContact (Contact contactTmp, Contact contact, Set<Telephone> tels, long numSiret);
 	public Contact getContact(long idContact);
 	public String getNumTel(Long idContact, String type);
 	public void updateGroupeContact(String[] groupeNames, Contact c);
-
+	public String getType(long idContact);
+	public long getNumSiretEntreprise(long id);
+	public List<Contact> listContactInGroup(long idGroup);
+	public List<Contact> listContactOutsideGroup(long idGroup);
+	public Groupe getGroupe(long idGroupe);
+	public boolean addContactToGroup(Long idGroupe, Long idContact);
+	public boolean deleteContactFromGroup(long idGroup, long idContact);
+	public void afficheMessage();
 }

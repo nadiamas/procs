@@ -26,6 +26,10 @@ public class UpdateContactValidationForm extends ActionForm{
 	
 	
 		
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		this.numSiret=null;
+	}
 	public String getNumSiret() {
 		return numSiret;
 	}

@@ -38,6 +38,7 @@ public class ServiceContact {
 	
 	public boolean addGroupe(String nomGroupe){
 		Groupe g = new Groupe(nomGroupe);
+		dao.afficheMessage();
 		return dao.addGroupe(g);
 	}
 	public boolean updateGroupe(long idm,String nom){
@@ -102,18 +103,18 @@ public class ServiceContact {
 	
 	public void updateContact(long idm,String nom,String prenom,String mail,
 								String rue,String ville, String codepostal,
-								String pays,String telPort,String telFix){
+								String pays,String telPort,String telFix,
+								long numSiret){
 		Contact contacttmp = getContact(idm);
-		
 		Contact c = new Contact(nom, prenom, mail);
 		Adresse a = new Adresse(rue, ville, codepostal, pays);
-		Telephone tp = new Telephone("portable", telPort);
-		Telephone tf = new Telephone("fix", telFix);
+		Telephone tp = new Telephone("portable", telPort,null);
+		Telephone tf = new Telephone("fix", telFix,null);
 		Set<Telephone> tels = new HashSet<>();
 		tels.add(tp); tels.add(tf);
 		c.setAdresse(a);
 
-			dao.updateContact(contacttmp, c,tels);
+			dao.updateContact(contacttmp, c,tels, numSiret);
 	}
 
 	public void deleteContact(long idm){
@@ -124,9 +125,26 @@ public class ServiceContact {
 		return dao.getNumTel(idContact, type);
 	}
 
-	
-	
+	public String getType(long idContact){
+		return dao.getType(idContact);
+	}
+	public long getNumSiretEntreprise(long id){
+		return dao.getNumSiretEntreprise(id);
+	}
 
+	public List<Contact> listContactInGroup(long idGroup){
+		return dao.listContactInGroup(idGroup);
+	}
+	public List<Contact> listContactOutsideGroup(long idGroup){
+		return dao.listContactOutsideGroup(idGroup);
+	}
+	public boolean addContactToGroup(Long idGroupe, Long idContact){
+		return dao.addContactToGroup(idGroupe, idContact);
+	}
+	public boolean deleteContactFromGroup(long idGroup, long idContact){
+		return dao.deleteContactFromGroup(idGroup, idContact);
+	}
+	
 
 
 }

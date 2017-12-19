@@ -44,11 +44,12 @@ public class UpdateContactAction extends Action {
 			final String telPort = lForm.getTelPort();
 			final String telFix=lForm.getTelFix();
 			final String submit = lForm.getSubmit();
+			final String numSiret = lForm.getNumSiret();
 			
 			ServiceContact sc = (ServiceContact) MyApplicationContext.getApplicationContext().getBean("ServiceContact");
 			
 			if(submit.equals("modifier")){
-				sc.updateContact(idm, nom, prenom, mail, rue, ville, codepostal, pays, telPort, telFix);
+				sc.updateContact(idm, nom, prenom, mail, rue, ville, codepostal, pays, telPort, telFix, Long.parseLong(numSiret));
 				return dMapping.findForward("sucmodif");
 			}
 			if(submit.equals("supprimer")){

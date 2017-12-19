@@ -17,7 +17,7 @@ public class test {
 
 	public static void main(String[] args) {
 
-	Session session = HibernateUtil.getSessionFactory().getCurrentSession(); 
+	/*Session session = HibernateUtil.getSessionFactory().getCurrentSession(); 
 	session.beginTransaction();
 	Contact c1 = new Contact();
 	c1.setNom("c1");
@@ -133,7 +133,8 @@ public class test {
 	System.out.println("groupe 2 : "+ groupe.getNomGroupe());
 	tx1.commit();
 	*/
-
+DAOContact dao = new DAOContact();
+dao.afficheMessage();
 	
 	}
 

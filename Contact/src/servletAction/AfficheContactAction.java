@@ -39,9 +39,18 @@ public class AfficheContactAction extends Action {
 			ServiceContact sc = (ServiceContact) MyApplicationContext.getApplicationContext().getBean("ServiceContact");
 			Contact contact = sc.getContact(idm);
 			
+			if(sc.getType(idm).equals("Contact"))
+				contact.setType("Contact");
+			else
+				contact.setType("Entreprise");
+			
+			 long numSiret = sc.getNumSiretEntreprise(idm);
+			 
+			
 			if (submit.equals("afficher")){
 			  RequestDispatcher rd = dRequest.getRequestDispatcher("/pages/AfficheContact.jsp");
 			  dRequest.setAttribute("contact", contact);
+			  dRequest.setAttribute("siret", numSiret);
 			  rd.forward(dRequest, dResponse);
 			  
 			}else{

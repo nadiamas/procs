@@ -13,6 +13,7 @@ public class Telephone {
 		this.typeTel = typeTel;
 		this.numTel = numTel;
 	} 
+	
 	public Telephone(){
 		
 	}

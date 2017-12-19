@@ -9,6 +9,6 @@
   	  <property name="typeTel" type="string" not-null="true" lazy="false"/> 
   	  <property name="numTel" type="string" not-null="true" lazy="false"/>
   	   
-	<many-to-one name="contact" column="ID_CONTACT"  class="Contact" lazy="false"  cascade="all"/> 
+	<many-to-one name="contact" column="ID_CONTACT"  class="Contact" lazy="false" /> 
   </class>
 </hibernate-mapping>
