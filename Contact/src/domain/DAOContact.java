@@ -189,19 +189,13 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 	@Override
 	public void updateContact (Contact contactTmp, Contact contact,Telephone tp,Telephone tf, long numSiret){
 		
-		/*if (numSiret <= 0) {
+		if (numSiret <= 0) {
 				contactTmp.setType("Contact");
-				if (contactTmp instanceof Entreprise) {
-				contactTmp = new Contact();
-				}
 		} else {
 			if (contactTmp instanceof Entreprise) {
 				((Entreprise) contactTmp).setNumeroSiret(numSiret);
-			}else{
-				contactTmp.setType("Entreprise");
-				contactTmp = new Entreprise(numSiret);
 			}
-		}*/
+		}
 		contactTmp.setNom(contact.getNom());
 		contactTmp.setPrenom(contact.getPrenom());
 		contactTmp.setMail(contact.getMail());

@@ -3,6 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="domain">
   <class name="Groupe" table="GROUPE" dynamic-update="true" >
+   <cache usage="read-write" />
   	 <id name="idGroupe" type="long" column="ID_GROUPE" >
    		<generator class="increment"/>
   	 </id>

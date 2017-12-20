@@ -8,29 +8,58 @@
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
 <%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
 <%@ taglib prefix="nested" uri="http://struts.apache.org/tags-nested" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html:html>
+<% 
+String ctxPath = request.getContextPath(); 
+%>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>contacts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
- <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+  <title>Mon Agenda</title>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></head>
+<body>
 
-</head>
-<body  style="background-color:#FFFACD; ">
-<table class="table" >
-<thead class="thead-inverse">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-user"></span>
+       Mon Agenda</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="<%= ctxPath %>/listeContact.do">Liste des contacts</a></li>
+        <li><a href="<%= ctxPath %>/CreationGroupe.do">Créer un groupe</a></li>
+        <li><a href="<%= ctxPath %>/ContactCreation.do">Créer un contact</a></li>
+        <li><a href="<%= ctxPath %>/listGroupe.do">Gestion des contacts</a></li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+<div style="padding-top: 80px;" class="container">
+<html:errors/>
+       <br>
+       
+       <h1>Résultats:</h1><hr>
+       <%
+ServiceContact sc = (ServiceContact)MyApplicationContext.getApplicationContext().getBean("ServiceContact");
+List<Contact> l = sc.listContact();
+if(l.size()>0){%>
 
+			<table class="table table-striped table-hover table-bordered">
+			<%for(Contact c :l){ %>
+<tbody>
 <tr>
 <th>Id </th>
  <th>Type</th>
@@ -40,12 +69,6 @@
 	<th>Groupe</th>
 	<th>Affichage</th>
   </tr>
-  </thead>
-<%
-ServiceContact sc = (ServiceContact)MyApplicationContext.getApplicationContext().getBean("ServiceContact");
-List<Contact> l = (List<Contact>) request.getAttribute("list");
-for(Contact c :l){
-%>
 <tr>
 <html:form action="/AfficheContact">
 <td><%=c.getNum()%></td>
@@ -68,9 +91,17 @@ for(Groupe g : groups){
 </td>
 <html:hidden property="idm"  value="<%=String.valueOf(c.getNum())%>" />
 </html:form>
-</tr>
-<%} %>
+</tr></tbody>
+				
+<%}%>
 
 </table>
+<%}
+			else{
+			%>
+			<div class="alert alert-danger">
+			  Aucun résultat!
+			</div>
+			<%} %>
 </body>
 </html:html>

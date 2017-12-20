@@ -30,11 +30,11 @@
 
 <body  style="background-color:#FFFACD; ">
 <html:errors/>
-<% String idGroupe = String.valueOf(request.getAttribute("idm"));%>
 
+    
        <center> <h3>Contactes Hors Groupe</h3> </center>
        <br>
-      
+   <html:form action="/AddContactToGroupe">    
 <table class="table" >
 <thead class="thead-inverse">
 <tr><th>Id </th>
@@ -44,39 +44,34 @@
 	<th>Action</th>
 	 </tr> 
 	 </thead>
+
 <%
 ServiceContact sc = (ServiceContact)MyApplicationContext.getApplicationContext().getBean("ServiceContact");
-List<Contact> l = sc.listContactOutsideGroup(Long.parseLong(idGroupe));
+String idGroupe = String.valueOf(request.getAttribute("idm"));
+List<Contact> l = sc.listContactOutsideGroup((long)request.getAttribute("idm"));
 for(Contact c :l){
 %>
-<html:form action="/AddContactToGroupe"> 
-    <h2> Groupe <%= idGroupe %></h2>
-    <html:hidden property="idGroupe"  value="<%=idGroupe%>" />
-    
 <tr>
-<td><%=c.getNum()%> <html:hidden property="idContactA"  value="<%=String.valueOf(c.getNum())%>" />
-</td>
+<td><%=c.getNum()%></td>
 <td><%=c.getNom()%></td>
 <td><%=c.getPrenom()%></td>
 <td><%=c.getMail()%></td>
 <td>
 <html:submit property="btn" value="Ajouter" styleClass="btn btn-warning">Ajouter</html:submit>
-
 </td>
-
+<html:hidden property="idContact"  value="<%=String.valueOf(c.getNum())%>" />
+<html:hidden property="idGroupe"  value="<%=idGroupe%>" />
 
 </tr>
-</html:form>
+
 <%} %>
 
 </table>
-
 <br>
 <hr><hr>
 
        <center> <h3>Contactes Appartenant au Groupe </h3></center>
 <br>
-
 <table class="table" >
 <thead class="thead-inverse">
 <tr><th>Id </th>
@@ -90,10 +85,6 @@ for(Contact c :l){
 List<Contact> li = sc.listContactInGroup((long)request.getAttribute("idm"));
 for(Contact c :li){
 %>
-
-<html:form action="/DeleteContactToGroupe"> 
-    <html:hidden property="idGroupe"  value="<%=idGroupe%>" />
-
 <tr>
 <td><%=c.getNum()%></td>
 <td><%=c.getNom()%></td>
@@ -101,16 +92,12 @@ for(Contact c :li){
 <td><%=c.getMail()%></td>
 <td>
 <html:submit property="btn" value="Supprimer" styleClass="btn btn-warning">Supprimer</html:submit>
-<html:hidden property="idContactS"  value="<%=String.valueOf(c.getNum())%>" />
+<html:hidden property="idContact"  value="<%=String.valueOf(c.getNum())%>" />
+<html:hidden property="idGroupe"  value="<%=idGroupe%>" />
 </td>
 </tr>
-</html:form>
-
 <%} %>
 </table>
-
-<br><hr>
-
-
+</html:form>
 </body>
 </html:html>

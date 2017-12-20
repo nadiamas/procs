@@ -37,10 +37,15 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
   <property name="hibernateProperties">
      <props>
        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-       <prop key="hibernate.hbm2ddl.auto">create</prop>
+       <prop key="hibernate.hbm2ddl.auto">update</prop>
               <prop key="connection.pool_size">1</prop>
                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+			    <prop key="cache.use_second_level_cache">true</prop>
+			    <prop key="hibernate.cache.use_query_cache">true</prop>
+			    <prop key="org.hibernate.ehcache.configurationResourceName">/ehcache.xml</prop>
      </props>
+ 
    </property>
    <property name="mappingResources">
      <list>
@@ -126,5 +131,5 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 <property name="numTel"><value></value></property>
 <property name="contact"><ref bean="Contact"></ref></property>
 </bean>
-
+    
 </beans>

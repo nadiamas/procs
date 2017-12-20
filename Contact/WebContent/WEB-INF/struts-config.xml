@@ -19,14 +19,13 @@
 <form-bean name="AddTelValidationForm" type="actionForm.AddTelValidationForm"/>
 <form-bean name="ModifGroupeValidationForm" type="actionForm.ModifGroupeValidationForm"/>
 <form-bean name="AddContactToGroupeValidationForm" type="actionForm.AddContactToGroupeValidationForm"/>
-<form-bean name="DeleteContactToGroupeValidationForm" type="actionForm.DeleteContactToGroupeValidationForm"/>
 
 
 
 </form-beans>
 
 <action-mappings>
-<action path="/main" forward="/pages/main.jsp"/>
+<action path="/main" forward="/pages/listeContact.jsp"/>
 <action path="/ContactCreation" forward="/pages/contactCreation.jsp" />
 <action path="/CreationGroupe" forward="/pages/CreationGroupe.jsp" />
 <action path="/listeContact" forward="/pages/listeContact.jsp" />
@@ -44,32 +43,32 @@
 </action> -->
 <action path="/Login" type="servletAction.LoginAction" name="LoginActionForm" scope="request" input="/pages/index.jsp">
 <forward name="errorlogin"   path="/pages/errorlogin.jsp" />
-<forward name="success"   path="/pages/main.jsp" />
+<forward name="success"   path="/pages/listeContact.jsp" />
 </action>
 
 
 <action path="/AddContact" type="servletAction.AddContactAction" name="AddContactValidationForm" scope="request" input="/pages/contactCreation.jsp">
 <forward name="success" path="/pages/success.jsp" />
 <forward name="error" path="/pages/error.jsp" />
-<forward name="main" path="/pages/main.jsp" />
+<forward name="main" path="/pages/listeContact.jsp" />
 </action>
 
 
 <action path="/AddAdresse" type="servletAction.AddAdresseAction" name="AddAdresseValidationForm" scope="request" input="/pages/addAdresse.jsp">
 <forward name="success" path="/pages/success.jsp" />
 <forward name="error" path="/pages/error.jsp" />
-<forward name="main" path="/pages/main.jsp" />
+<forward name="main" path="/pages/listeContact.jsp" />
 </action>
 
 <action path="/AddTel" type="servletAction.AddTelAction" name="AddTelValidationForm" scope="request" input="/pages/NewTel.jsp">
 <forward name="success" path="/pages/success.jsp" />
 <forward name="error" path="/pages/error.jsp" />
-<forward name="main" path="/pages/main.jsp" />
+<forward name="main" path="/pages/listeContact.jsp" />
 </action>
 
-<action path="/DeleteContact" type="servletAction.DeleteContactAction" name="DeleteContactValidationForm" scope="request" input="/pages/main.jsp">
+<action path="/DeleteContact" type="servletAction.DeleteContactAction" name="DeleteContactValidationForm" scope="request" input="/pages/listeContact.jsp">
 <forward name="affichagecontact" path="/pages/affichagecontact.jsp" />
-<forward name="error" path="/pages/main.jsp" />
+<forward name="error" path="/pages/listeContact.jsp" />
 <forward name="sucsupp" path="/pages/sucsupp.jsp" />
 </action>
 
@@ -90,9 +89,9 @@
 <forward name="sucmodif" path="/pages/sucmodif.jsp" />
 </action>
 
-<action path="/UpdateGroupe" type="servletAction.UpdateGroupeAction" name="UpdateGroupeValidationForm" scope="request" input="/pages/main.jsp">
+<action path="/UpdateGroupe" type="servletAction.UpdateGroupeAction" name="UpdateGroupeValidationForm" scope="request" input="/pages/listeContact.jsp">
 <forward name="gestionContact" path="/pages/gestionContact.jsp" />
-<forward name="listGroupe" path="/pages/listGroupe.jsp" />
+<forward name="listGroupe" path="/pages/listeGroupe.jsp" />
 <forward name="sucsupp" path="/pages/sucsupp.jsp" />
 <forward name="sucmodif" path="/pages/sucmodif.jsp" />
 <forward name="error" path="/pages/error.jsp" />
@@ -112,22 +111,15 @@
 <action path="/AddGroup" type="servletAction.AddGroupAction" name="AddGroupValidationForm" scope="request" input="/pages/CreationGroupe.jsp">
 <forward name="successgrp" path="/pages/successgrp.jsp" />
 <forward name="error" path="/pages/error.jsp" />
-<forward name="main" path="/pages/main.jsp" />
+<forward name="main" path="/pages/listeContact.jsp" />
 <forward name="listGroupe" path="/pages/listGroupe.jsp" />
 
 </action>
 
 <action path="/AddContactToGroupe" type="servletAction.AddContactToGroupeAction" name="AddContactToGroupeValidationForm" scope="request" input="/pages/gestionContact.jsp">
 <forward name="gestionContact" path="/pages/gestionContact.jsp" />
-<forward name="success" path="/pages/success.jsp" />
-<forward name="error" path="/pages/error.jsp" />
 </action>
 
-<action path="/DeleteContactToGroupe" type="servletAction.DeleteContactToGroupeAction" name="DeleteContactToGroupeValidationForm" scope="request" input="/pages/gestionContact.jsp">
-<forward name="gestionContact" path="/pages/gestionContact.jsp" />
-<forward name="success" path="/pages/success.jsp" />
-<forward name="error" path="/pages/error.jsp" />
-</action>
 
 <action path="/View" type="servletAction.ViewAction" name="ViewContactValidationForm" scope="request" input="/pages/affichagecontact.jsp">
 <forward name="affichagecontact" path="/pages/affichagecontact.jsp"></forward>
@@ -135,7 +127,7 @@
 
 
 <action path="/Retour" type="servletAction.RetourAction" name="RetourValidationForm" scope="request" input="/pages/success.jsp">
-<forward name="main" path="/pages/main.jsp" />
+<forward name="main" path="/pages/listeContact.jsp" />
 <forward name="affichagecontact" path="/pages/affichagecontact.jsp" />
 </action>
 

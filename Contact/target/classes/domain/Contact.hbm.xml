@@ -4,7 +4,7 @@
 <hibernate-mapping package="domain">
   <class name="Contact" table="CONTACT" discriminator-value="CONTACT">
   
-  <!--  <cache usage="read-write" /> -->
+   <cache usage="read-write" />
   
   	 <id name="num" type="long" column="ID_CONTACT" >
    		<generator class="increment"/>

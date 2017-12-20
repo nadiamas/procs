@@ -191,6 +191,14 @@ public class AddContactValidationForm extends ActionForm {
 			errors.add("pays",new
 			ActionMessage("creation.pays.error.required"));
 			}
+		if( getTelfix()== null || getTelfix().length() < 5 ) {
+			errors.add("tel fix",new
+			ActionMessage("creation.tel.error.required"));
+			}
+		if( getTelport()== null || getTelport().length() < 5 ) {
+			errors.add("tel fix",new
+			ActionMessage("creation.tel.error.required"));
+			}
 		
 		if(getTelfix()!=null || getTelfix().length()>1){
 		try {
@@ -201,6 +209,15 @@ public class AddContactValidationForm extends ActionForm {
 		}
 		}
 
+		if(getTelport()!=null || getTelport().length()>1){
+			try {
+				Integer.parseInt(getTelfix());
+			} catch (NumberFormatException e){
+				errors.add("tel Portable",new
+						ActionMessage("creation.tel.error.required"));
+			}
+			}
+		
 		try {
 			Integer.parseInt(getCodepostal());
 		} catch (NumberFormatException e){
