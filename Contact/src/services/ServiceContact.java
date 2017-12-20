@@ -62,9 +62,7 @@ public class ServiceContact {
 		Contact c ;
 		Telephone port,fixe;
 		if (Long.valueOf(numSiret) <= 0 ){
-			//c = new Contact( firstName, lastName, email);
-			c = (Contact) MyApplicationContext.getApplicationContext().getBean("Contact1");
-			c.setNom(firstName); c.setPrenom(lastName); c.setMail(email);
+			c = new Contact( firstName, lastName, email);
 		}else{
 			c = new Entreprise(firstName, lastName, email, Long.valueOf(numSiret));
 		}
@@ -114,7 +112,7 @@ public class ServiceContact {
 		tels.add(tp); tels.add(tf);
 		c.setAdresse(a);
 
-			dao.updateContact(contacttmp, c,tels, numSiret);
+			dao.updateContact(contacttmp, c,tp,tf, numSiret);
 	}
 
 	public void deleteContact(long idm){

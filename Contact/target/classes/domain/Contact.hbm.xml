@@ -22,7 +22,7 @@
 		<many-to-many class="Groupe" column="ID_GROUPE"/>  
 	</set>
 
-	<set name="tels" table="telephone" cascade="all" lazy="false">   
+	<set name="tels" table="telephone" cascade="all-delete-orphan" fetch="select" lazy="false">   
 		 <key column="ID_CONTACT" />  
 		 <one-to-many class="Telephone"/>  
 	</set> 

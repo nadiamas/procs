@@ -6,8 +6,8 @@
   	 <id name="idTel" type="long" column="ID_TEL">
    		<generator class="increment"/>
   	 </id>
-  	  <property name="typeTel" type="string" not-null="true" lazy="false"/> 
-  	  <property name="numTel" type="string" not-null="true" lazy="false"/>
+  	  <property name="typeTel" type="string"/> 
+  	  <property name="numTel" type="string"/>
   	   
 	<many-to-one name="contact" column="ID_CONTACT"  class="Contact" lazy="false" /> 
   </class>

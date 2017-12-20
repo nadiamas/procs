@@ -2,6 +2,7 @@ package servletAction;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -45,7 +46,9 @@ public class UpdateGroupeAction extends Action {
 				}
 			if(submit.equals("Gérer Contactes")){
 				  RequestDispatcher rd = dRequest.getRequestDispatcher("/pages/gestionContact.jsp");
+				  List<Contact> list = sc.listContactOutsideGroup(idm);
 				  dRequest.setAttribute("idm", idm);
+				  dRequest.setAttribute("list", list);
 				  rd.forward(dRequest, dResponse);
 			}
 			if(submit.equals("Supprimer")){

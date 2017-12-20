@@ -7,13 +7,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
-public class AddContactToGroupeValidationForm extends ActionForm {
+public class DeleteContactToGroupeValidationForm extends ActionForm {
 
 	
 	private static final long serialVersionUID = 1L;
 
 	private long idGroupe;
-	private long idContactA;
+	private long idContactS;
 	private String btn;
 	
 	
@@ -31,17 +31,16 @@ public class AddContactToGroupeValidationForm extends ActionForm {
 	public void setIdGroupe(long idGroupe) {
 		this.idGroupe = idGroupe;
 	}
-	public long getIdContactA() {
-		return idContactA;
-	}
-	public void setIdContactA(long idContactA) {
-		this.idContactA = idContactA;
-	}
 
-
+	public long getIdContactS() {
+		return idContactS;
+	}
+	public void setIdContactS(long idContactS) {
+		this.idContactS = idContactS;
+	}
 	public void reset(ActionMapping mapping, HttpServletRequest request) {		
 		this.btn=null;
-		this.idContactA=0;
+
 		}
 	
 		public ActionErrors validate(

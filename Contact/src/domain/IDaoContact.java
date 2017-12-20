@@ -16,7 +16,7 @@ public interface IDaoContact {
 	public List<Telephone> listTel(long idContact);
 	public Set<Groupe> listGRP(long idContact);
 	public boolean deleteContact (Long idContact);
-	public void updateContact (Contact contactTmp, Contact contact, Set<Telephone> tels, long numSiret);
+	public void updateContact (Contact contactTmp, Contact contact,Telephone tp,Telephone tf, long numSiret);
 	public Contact getContact(long idContact);
 	public String getNumTel(Long idContact, String type);
 	public void updateGroupeContact(String[] groupeNames, Contact c);

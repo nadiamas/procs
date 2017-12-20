@@ -19,6 +19,7 @@
 <form-bean name="AddTelValidationForm" type="actionForm.AddTelValidationForm"/>
 <form-bean name="ModifGroupeValidationForm" type="actionForm.ModifGroupeValidationForm"/>
 <form-bean name="AddContactToGroupeValidationForm" type="actionForm.AddContactToGroupeValidationForm"/>
+<form-bean name="DeleteContactToGroupeValidationForm" type="actionForm.DeleteContactToGroupeValidationForm"/>
 
 
 
@@ -118,8 +119,15 @@
 
 <action path="/AddContactToGroupe" type="servletAction.AddContactToGroupeAction" name="AddContactToGroupeValidationForm" scope="request" input="/pages/gestionContact.jsp">
 <forward name="gestionContact" path="/pages/gestionContact.jsp" />
+<forward name="success" path="/pages/success.jsp" />
+<forward name="error" path="/pages/error.jsp" />
 </action>
 
+<action path="/DeleteContactToGroupe" type="servletAction.DeleteContactToGroupeAction" name="DeleteContactToGroupeValidationForm" scope="request" input="/pages/gestionContact.jsp">
+<forward name="gestionContact" path="/pages/gestionContact.jsp" />
+<forward name="success" path="/pages/success.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
 
 <action path="/View" type="servletAction.ViewAction" name="ViewContactValidationForm" scope="request" input="/pages/affichagecontact.jsp">
 <forward name="affichagecontact" path="/pages/affichagecontact.jsp"></forward>

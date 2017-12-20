@@ -8,7 +8,7 @@
   	 </id>
   	  <property name="nomGroupe" type="string" not-null="true" unique="true" /> 
  
-<set name="contacts"   table="PROFIL" inverse="true" lazy="false" cascade="all">  
+<set name="contacts"   table="PROFIL" inverse="true" lazy="false">  
 <key column="ID_GROUPE"/>  
 <many-to-many class="Contact" column="ID_CONTACT" />  
 </set>

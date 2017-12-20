@@ -16,34 +16,35 @@ import org.apache.struts.action.ActionMapping;
 
 
 import actionForm.AddContactToGroupeValidationForm;
+import actionForm.DeleteContactToGroupeValidationForm;
 import domain.Contact;
 import services.ServiceContact;
 import util.MyApplicationContext;
 
 
-public class AddContactToGroupeAction extends Action  {
+public class DeleteContactToGroupeAction extends Action  {
 	
 	public ActionForward execute(final ActionMapping pMapping,
 	ActionForm pForm, final HttpServletRequest pRequest,
 	final HttpServletResponse pResponse) throws ServletException, IOException {
 		
 	
-	final AddContactToGroupeValidationForm lForm=(AddContactToGroupeValidationForm)pForm;
+	final DeleteContactToGroupeValidationForm lForm=(DeleteContactToGroupeValidationForm)pForm;
 	final long idGroupe = lForm.getIdGroupe();
-	final long idContactA = lForm.getIdContactA();
+	final long idContactS = lForm.getIdContactS();
 	
+	final String btn = lForm.getBtn();
 	ServiceContact sc = (ServiceContact) MyApplicationContext.getApplicationContext().getBean("ServiceContact");
-		System.out.println("Ajout de groupe="+idGroupe +" contact ="+ idContactA);
-		sc.addContactToGroup(idGroupe, idContactA);
-		
+
+		System.out.println("supprimer de groupe="+idGroupe +" contact ="+ idContactS);
+		sc.deleteContactFromGroup(idGroupe, idContactS);
+	
 		 RequestDispatcher rd = pRequest.getRequestDispatcher("/pages/gestionContact.jsp");
 		  List<Contact> list = sc.listContactOutsideGroup(idGroupe);
 		  pRequest.setAttribute("idm", idGroupe);
 		  pRequest.setAttribute("list", list);
 		  rd.forward(pRequest, pResponse);
 		  return null;
-		  
-
 	}
 	
 }

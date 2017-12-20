@@ -92,7 +92,7 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 			port.setContact(c); c.getTels().add(port);
 			fix.setContact(c); c.getTels().add(fix);
 			
-			getHibernateTemplate().save(c);
+			getHibernateTemplate().persist(c);
 			return true;
 			
 		} catch (HibernateException e) {
@@ -187,7 +187,7 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 	}
 	
 	@Override
-	public void updateContact (Contact contactTmp, Contact contact,Set<Telephone> tels, long numSiret){
+	public void updateContact (Contact contactTmp, Contact contact,Telephone tp,Telephone tf, long numSiret){
 		
 		/*if (numSiret <= 0) {
 				contactTmp.setType("Contact");
@@ -209,16 +209,11 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		contactTmp.getAdresse().setVille((contact.getAdresse().getVille()));
 		contactTmp.getAdresse().setRue((contact.getAdresse().getRue()));
 		contactTmp.getAdresse().setPays((contact.getAdresse().getPays()));
-		contactTmp.getTels().clear();
-		if(tels != null ){
-			for(Telephone t :tels){
-				t.setContact(contactTmp);
-			}
-		}
-		contactTmp.setTels(tels);
+		updateTelPort(contactTmp.getNum(),tp);
+		updateTelFix(contactTmp.getNum(), tf);
+		
 		getHibernateTemplate().merge(contactTmp);
 	}
-	
 	@Override
 	public void updateGroupeContact(String[] groupeNames, Contact c){
 		for(String s : groupeNames){
@@ -272,21 +267,25 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 		session.update(a);
 		session.getTransaction().commit();
 	}
-	public void updateTelPort (Long idContact, Telephone tel, String type){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();  
-
-		Transaction tx = session.getTransaction();
-		tx.begin();
-		String hqlUpdate = "update Telephone t set t.numTel = :numTel where t.contact.num = :idContact and t.typeTel=:type";
-		// or String hqlUpdate = "update Customer set name = :newName where name = :oldName";
-		int updatedEntities = session.createQuery( hqlUpdate )
-		        .setString( "numTel", tel.getNumTel() )
-		        .setParameter("idContact", idContact )
-		        .setParameter("type", type)
-		        .executeUpdate();
-		tx.commit();
+	
+	public void updateTelPort (Long idContact, Telephone tel){
+		DetachedCriteria filter = DetachedCriteria.forClass(Telephone.class);
+		filter.add(Restrictions.like("contact.num", idContact));
+		filter.add(Restrictions.like("typeTel", "portable"));
+		Telephone telp = (Telephone) getHibernateTemplate().findByCriteria(filter).get(0);
+		telp.setNumTel(tel.getNumTel());
+		getHibernateTemplate().update(telp);
 	}
 
+	public void updateTelFix (Long idContact, Telephone tel){
+		DetachedCriteria filter = DetachedCriteria.forClass(Telephone.class);
+		filter.add(Restrictions.like("contact.num", idContact));
+		filter.add(Restrictions.like("typeTel", "fix"));
+		Telephone telp = (Telephone) getHibernateTemplate().findByCriteria(filter).get(0);
+		telp.setNumTel(tel.getNumTel());
+		getHibernateTemplate().update(telp);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Groupe> listGroupe() {
@@ -373,9 +372,10 @@ public class DAOContact extends HibernateDaoSupport implements IDaoContact{
 			Groupe Groupe = getHibernateTemplate().get(Groupe.class, idGroup);
 			boolean result = contact.getGroups().remove(Groupe);
 			boolean result2 = Groupe.getContacts().remove(contact);
+			System.out.println(contact.getGroups().size());
+			System.out.println(Groupe.getContacts().size());
 			getHibernateTemplate().update(contact);
 			getHibernateTemplate().update(Groupe);
-
 			return result & result2;
 		} catch (HibernateException e) {
 			e.printStackTrace();
